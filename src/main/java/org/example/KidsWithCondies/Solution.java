@@ -1,23 +1,19 @@
 package org.example.KidsWithCondies;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Solution {
     public static List<Boolean> kidsWithCandies(int[] candies, int extraCandies) {
-        int[] sorted = Arrays.copyOf(candies, candies.length);
-        Arrays.sort(sorted);
-
-        int max = sorted[sorted.length - 1];
-        List<Boolean> isGreatest = new ArrayList<>();
+        int max = Integer.MIN_VALUE;
         for (int candy : candies) {
-            if (candy < max - extraCandies) {
-                isGreatest.add(false);
-            } else {
-                isGreatest.add(true);
-            }
+            max = Math.max(max, candy);
         }
-        return isGreatest;
+
+        int finalMax = max;
+        return Arrays.stream(candies)
+                .mapToObj(candy -> candy + extraCandies >= finalMax)
+                .collect(Collectors.toList());
     }
 }
