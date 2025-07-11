@@ -1,5 +1,6 @@
 package org.example.KidsWithCondies;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,9 +12,10 @@ public class Solution {
             max = Math.max(max, candy);
         }
 
-        int finalMax = max;
-        return Arrays.stream(candies)
-                .mapToObj(candy -> candy + extraCandies >= finalMax)
-                .collect(Collectors.toList());
+        List<Boolean> isGreatest = new ArrayList<>();
+        for (int candy : candies) {
+            isGreatest.add(candy + extraCandies >= max);
+        }
+        return isGreatest;
     }
 }
