@@ -2,20 +2,26 @@ package org.example.StringCompression;
 
 public class Solution {
     public static int compress(char[] chars) {
-        StringBuilder s = new StringBuilder();
-        int counter = 1;
-        for(int i = 0; i < chars.length; i++) {
-            char letter = chars[i];
-            while((i + 1 < chars.length) && chars[i] == chars[i + 1]) {
-                counter++;
-                i++;
-            }
-            s.append(letter);
-            s.append(counter);
+        int read = 0;
+        int write = 0;
 
-            counter = 1;
+        while(read < chars.length) {
+            char current = chars[read];
+            int count = 0;
+
+            while(read < chars.length && chars[read] == current) {
+                read++;
+                count++;
+            }
+
+            chars[write++] = current;
+
+            if(count > 1) {
+                for(char c : Integer.toString(count).toCharArray()) {
+                    chars[write++] = c;
+                }
+            }
         }
-        System.out.println(s.toString());
-        return s.length();
+        return write;
     }
 }
